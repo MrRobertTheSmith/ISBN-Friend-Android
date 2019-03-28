@@ -1,26 +1,19 @@
 package com.example.isbnfriend.Controller;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
-import com.example.isbnfriend.Model.Book;
 import com.example.isbnfriend.Model.Item;
-import com.example.isbnfriend.Model.VolumeInfo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.util.List;
-
 public class RetrofitClient{
     private static Retrofit retroFit;
     private static final String baseURL = "https://www.googleapis.com/books/v1/";
     GoogleBooksAPI gbAPI;
 
-    private Book book;
-    private VolumeInfo vMI;
     private Item topLevelJSONObject;
 
     public MutableLiveData<Item> observableResponse;
@@ -35,11 +28,7 @@ public class RetrofitClient{
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        book = new Book();
-        vMI = new VolumeInfo();
         topLevelJSONObject = new Item();
-
-        book.setVolumeInfo(vMI);
 
         observableResponse = new MutableLiveData<Item>();
     }
