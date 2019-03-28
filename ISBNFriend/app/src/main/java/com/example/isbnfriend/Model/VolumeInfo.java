@@ -1,5 +1,6 @@
 package com.example.isbnfriend.Model;
 
+import android.arch.lifecycle.MutableLiveData;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -17,13 +18,6 @@ public class VolumeInfo {
 
     @SerializedName("previewLink")
     private String previewLink;
-
-    public VolumeInfo(String title, String desc, List<String> auths, String prev){
-        this.title = title;
-        this.description = desc;
-        this.authors = auths;
-        this.previewLink = prev;
-    }
 
     public String getTitle(){
         return title;
