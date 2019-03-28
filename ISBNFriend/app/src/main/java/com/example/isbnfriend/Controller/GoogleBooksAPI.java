@@ -7,6 +7,6 @@ import retrofit2.http.Query;
 
 public interface GoogleBooksAPI {
 
-    @GET("/volumes?")
-    Call<Book>fetchBookForISBN(@Query("q") String isbn);
+    @GET("volumes?")
+    Call<Book> fetchBookForISBN(@Query("q") String isbn);
 }

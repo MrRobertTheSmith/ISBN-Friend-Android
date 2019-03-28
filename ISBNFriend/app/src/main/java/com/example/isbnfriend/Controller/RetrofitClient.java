@@ -8,19 +8,44 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitClient {
+public class RetrofitClient{
     private static Retrofit retroFit;
     private static final String baseURL = "https://www.googleapis.com/books/v1/";
+    GoogleBooksAPI gbAPI;
 
-    public static Retrofit getRetroFit(){
-        if (retroFit == null){
-            retroFit = new retrofit2.Retrofit.Builder()
-                    .baseUrl(baseURL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
+    //Constructor which works the same way as init in swift
+    public RetrofitClient() {
 
-        return retroFit;
+        retroFit = new retrofit2.Retrofit.Builder()
+                .baseUrl(baseURL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+    }
+
+    public void fetchBookForISBN(String isbn) {
+
+        gbAPI = retroFit.create(GoogleBooksAPI.class);
+
+        Call<Book> call = gbAPI.fetchBookForISBN(isbn);
+
+        call.enqueue(new Callback<Book>() {
+            @Override
+            public void onResponse(Call<Book> call, Response<Book> response) {
+                if (response.isSuccessful()){
+                    Log.d("NETTAG", response.body().toString());
+                }
+                else{
+                    Log.d("NETTAG", "Unsuccessful Response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Book> call, Throwable t) {
+                    Log.d("NETTAG", t.getMessage());
+            }
+        });
+
     }
 
 }
