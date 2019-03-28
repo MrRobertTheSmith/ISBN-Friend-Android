@@ -10,14 +10,20 @@
             android:text="@string/textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/book_name_textView" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
+            android:id="@+id/book_name_textView"
+            android:layout_marginTop="8dp"
+            android:textSize="38sp"
+            android:textAlignment="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:ems="10"
+            android:textSize="16sp"
             android:hint="@string/search_autofill_hints"
             android:autofillHints="@string/search_autofill_hints"
             android:importantForAutofill="no"
@@ -34,15 +40,24 @@
             android:layout_height="50dp"
             android:id="@+id/search_button"
             android:theme="@style/ButtonTheme"
+            android:onClick="searchPressed"
             app:layout_constraintTop_toTopOf="@+id/search_editText"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="24dp"
             style="@style/Widget.AppCompat.Button"/>
+
     <TextView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:id="@+id/textView2" android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@+id/search_editText" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="24dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="24dp"
-            android:layout_marginBottom="32dp" app:layout_constraintBottom_toBottomOf="parent"/>
+            android:id="@+id/contentTextView"
+            android:scrollbars="vertical"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/search_editText"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 </android.support.constraint.ConstraintLayout>

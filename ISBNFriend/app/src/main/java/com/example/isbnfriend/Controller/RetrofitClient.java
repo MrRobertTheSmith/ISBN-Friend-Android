@@ -14,8 +14,6 @@ public class RetrofitClient{
     private static final String baseURL = "https://www.googleapis.com/books/v1/";
     GoogleBooksAPI gbAPI;
 
-    private Item topLevelJSONObject;
-
     public MutableLiveData<Item> observableResponse;
 
     private static final String TAG = RetrofitClient.class.getName() + "NETTAG";
@@ -27,8 +25,6 @@ public class RetrofitClient{
                 .baseUrl(baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-        topLevelJSONObject = new Item();
 
         observableResponse = new MutableLiveData<Item>();
     }
@@ -43,9 +39,8 @@ public class RetrofitClient{
             @Override
             public void onResponse(Call<Item> call, Response<Item> response) {
                 if (response.isSuccessful()){
-                    topLevelJSONObject = response.body();
-                    observableResponse.setValue(topLevelJSONObject);
-                    Log.d(TAG, topLevelJSONObject.getBooks().get(0).getVolumeInfo().getTitle().toString());
+                    observableResponse.setValue(response.body());
+                    Log.d(TAG, "${response.body().getBooks().get(0).getVolumeInfo().getTitle().toString()}");
                 }
                 else{
                     Log.d(TAG, "Unsuccessful Response");
@@ -54,7 +49,8 @@ public class RetrofitClient{
 
             @Override
             public void onFailure(Call<Item> call, Throwable t) {
-                    Log.d(TAG, t.getMessage());
+
+                Log.d(TAG, t.getMessage());
             }
         });
 
