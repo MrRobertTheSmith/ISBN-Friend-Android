@@ -6,6 +6,8 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
+//This is part of the Implementation of Retrofit2
+
 public interface GoogleBooksAPI {
 
     @GET("volumes?")

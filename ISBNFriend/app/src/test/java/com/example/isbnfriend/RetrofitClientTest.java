@@ -1,11 +1,7 @@
 package com.example.isbnfriend;
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule;
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleOwner;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import com.example.isbnfriend.Model.Item;
 import com.example.isbnfriend.View.NetworkViewmodel;
 import org.junit.Before;
@@ -17,10 +13,7 @@ import org.junit.runners.JUnit4;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import static junit.framework.Assert.assertNull;
 import static junit.framework.TestCase.assertEquals;

@@ -6,10 +6,20 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.widget.Toast
+import com.example.isbnfriend.Model.Book
 import com.example.isbnfriend.Model.Item
 import com.example.isbnfriend.R
 import kotlinx.android.synthetic.main.activity_main.*
+
+/*
+This is the main activity, It accesses the ViewController and observes the LiveData on the ViewController
+The button being pressed calls the search method on the view controller. Changes are observed and lead to
+updates to the View.
+Invalid repsonses from the data are watched for and trigger UI updates
+ */
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,11 +37,12 @@ class MainActivity : AppCompatActivity() {
 
         val obs = Observer<Item>{
             if (it != null){
-                Log.d(TAG, "${it.books?.get(0)?.volumeInfo?.title}")
-
                 book_name_textView.text = it.books?.get(0)?.volumeInfo?.title
                 contentTextView.text = it.books?.get(0)?.volumeInfo?.description
+            }
 
+            if (it?.books == null){
+                displayToast("No book for this ISBN")
             }
         }
 
@@ -41,9 +52,17 @@ class MainActivity : AppCompatActivity() {
 
     fun searchPressed(view: View){
         val stringEntered = search_editText.text.toString()
-        if (stringEntered.length == 13) {
-            model.searchViaModel(stringEntered)
-            contentTextView.text = ""
+
+        if(!model.searchViaModel(stringEntered)){
+            displayToast("Invalid ISBN")
         }
+    }
+
+    //Private helper method to build a toast; this is used when there is an input
+    //validation issue or no valid API response
+    private fun displayToast(message:String){
+        val toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.CENTER, 0, 0)
+        toast.show()
     }
 }

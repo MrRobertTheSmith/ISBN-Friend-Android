@@ -1,9 +1,9 @@
 package com.example.isbnfriend.Model;
 
-import android.arch.lifecycle.MutableLiveData;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
+
+//This class models the top level of the JSON response
 
 public class VolumeInfo {
 

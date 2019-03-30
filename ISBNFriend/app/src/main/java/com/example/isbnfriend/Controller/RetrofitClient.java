@@ -9,6 +9,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/*
+This is one of the common design patterns to implement Retrofit2.
+Retrofit client is a class that creates an instance of Retrofit when initialised and
+also has an instance method that searches the Google books API based on a string.
+My approach is to use LiveData here which is observable from another part of the app.
+ */
+
 public class RetrofitClient{
     private static Retrofit retroFit;
     private static final String baseURL = "https://www.googleapis.com/books/v1/";
@@ -29,6 +36,7 @@ public class RetrofitClient{
         observableResponse = new MutableLiveData<Item>();
     }
 
+    //This method searches The API and updates the value of the live data.
     public void fetchBookForISBN(String isbn) {
 
         gbAPI = retroFit.create(GoogleBooksAPI.class);
@@ -44,6 +52,8 @@ public class RetrofitClient{
                 }
                 else{
                     Log.d(TAG, "Unsuccessful Response");
+                    //Clear the item to trigger the observer
+                    observableResponse.setValue(new Item());
                 }
             }
 
