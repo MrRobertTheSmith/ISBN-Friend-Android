@@ -14,6 +14,7 @@ import org.junit.runners.JUnit4;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import static junit.framework.Assert.assertNull;
 import static junit.framework.TestCase.assertEquals;
@@ -46,7 +47,7 @@ public class RetrofitClientTest {
             }
         });
 
-        aLatch.await();
+        aLatch.await(3, TimeUnit.SECONDS);
 
         assertEquals("C Programming Language", testViewModel.getJsonResponse().getValue()
                         .getBooks()
@@ -67,7 +68,7 @@ public class RetrofitClientTest {
             }
         });
 
-        aLatch.await();
+        aLatch.await(3, TimeUnit.SECONDS);
 
         List<String> authors = new ArrayList<>();
         authors.add("Brian W. Kernighan");
