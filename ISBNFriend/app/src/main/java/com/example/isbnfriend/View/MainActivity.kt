@@ -2,6 +2,7 @@ package com.example.isbnfriend.View
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.method.ScrollingMovementMethod
@@ -9,7 +10,6 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
-import com.example.isbnfriend.Model.Book
 import com.example.isbnfriend.Model.Item
 import com.example.isbnfriend.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,6 +24,8 @@ Invalid repsonses from the data are watched for and trigger UI updates
 class MainActivity : AppCompatActivity(), BarcodeScannerFragmentInterface {
 
     val TAG = "APIRESPONSE"
+    var fragmentOn = false
+    val STATE_KEY = "FRAGSTATE"
 
     lateinit var model:NetworkViewmodel;
 
@@ -48,7 +50,23 @@ class MainActivity : AppCompatActivity(), BarcodeScannerFragmentInterface {
         }
 
         model.jsonResponse.observe(this, obs)
+    }
 
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        fragmentOn = savedInstanceState?.getBoolean(STATE_KEY) ?: false
+
+        if(fragmentOn){
+            hideActivityUI()
+        }
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+
+        outState?.putBoolean(STATE_KEY, fragmentOn)
     }
 
     override fun onBackPressed() {
@@ -75,6 +93,7 @@ class MainActivity : AppCompatActivity(), BarcodeScannerFragmentInterface {
         val transaction = fragmentManager.beginTransaction()
 
         transaction.add(R.id.frame_layout, frag).addToBackStack(null).commit()
+        hideActivityUI()
     }
 
     //Private helper method to build a toast; this is used when there is an input
@@ -92,6 +111,7 @@ class MainActivity : AppCompatActivity(), BarcodeScannerFragmentInterface {
         }
 
         Log.d(TAG, isbn)
+        showActivityUI()
         removeFragment()
     }
 
@@ -101,5 +121,26 @@ class MainActivity : AppCompatActivity(), BarcodeScannerFragmentInterface {
         fragment?.let{
             supportFragmentManager.beginTransaction().remove(it)?.commit()
         }
+    }
+
+    fun showActivityUI(){
+        book_name_textView.visibility = View.VISIBLE
+        search_button.visibility = View.VISIBLE
+        scan_button.visibility = View.VISIBLE
+        contentTextView.visibility = View.VISIBLE
+        contentTextView.visibility = View.VISIBLE
+        search_editText.visibility = View.VISIBLE
+
+        fragmentOn = false
+    }
+    fun hideActivityUI(){
+        book_name_textView.visibility = View.INVISIBLE
+        search_button.visibility = View.INVISIBLE
+        scan_button.visibility = View.INVISIBLE
+        contentTextView.visibility = View.INVISIBLE
+        contentTextView.visibility = View.INVISIBLE
+        search_editText.visibility = View.INVISIBLE
+
+        fragmentOn = true
     }
 }
