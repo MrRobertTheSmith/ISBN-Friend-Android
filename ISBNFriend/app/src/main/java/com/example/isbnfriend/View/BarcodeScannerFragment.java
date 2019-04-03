@@ -1,6 +1,7 @@
 package com.example.isbnfriend.View;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -24,6 +25,9 @@ public class BarcodeScannerFragment extends Fragment {
     SurfaceView cameraView;
     private BarcodeDetector bDetector;
 
+    //Interface
+    BarcodeScannerFragmentInterface scannerInterface;
+
     //Factory Method
     public static BarcodeScannerFragment newInstance() {
         return new BarcodeScannerFragment();
@@ -31,6 +35,18 @@ public class BarcodeScannerFragment extends Fragment {
 
     public BarcodeScannerFragment() {
         // Required empty public constructor
+    }
+
+    //LifecycleMethods
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof BarcodeScannerFragmentInterface) {
+            scannerInterface = (BarcodeScannerFragmentInterface) context;
+        }
+        else{
+            throw new ClassCastException(context.toString() + getString(R.string.Fragment_Launch_Error_Message));
+        }
     }
 
     @Override
@@ -56,7 +72,13 @@ public class BarcodeScannerFragment extends Fragment {
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray barcodes = detections.getDetectedItems();
 
-                if (barcodes.size() > 0){
+                if(barcodes.size() > 0){
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            scannerInterface.passBackISBN(barcodes.valueAt(0).toString());
+                        }
+                    });
                 }
             }
         });
@@ -74,7 +96,6 @@ public class BarcodeScannerFragment extends Fragment {
                         Log.e("CAMERASOURCE", "No Camera Permission");
                         return;
                     }
-                    Log.e("CAMERASOURCE", "Camera Should Start");
                     camSource.start(cameraView.getHolder());
                 }
                 catch(IOException ie){
@@ -98,6 +119,7 @@ public class BarcodeScannerFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        camSource.stop();
         camSource.release();
         bDetector.release();
     }

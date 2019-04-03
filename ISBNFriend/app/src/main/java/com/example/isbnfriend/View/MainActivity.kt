@@ -21,12 +21,13 @@ updates to the View.
 Invalid repsonses from the data are watched for and trigger UI updates
  */
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BarcodeScannerFragmentInterface {
 
     val TAG = "APIRESPONSE"
 
     lateinit var model:NetworkViewmodel;
 
+    //Lifecycle Methods
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -52,12 +53,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if(supportFragmentManager.backStackEntryCount > 0){
-            supportFragmentManager.popBackStackImmediate()
+            removeFragment()
         }
         else{
             super.onBackPressed()}
     }
 
+    //Action Methods from the UI
     fun searchPressed(view: View){
         val stringEntered = search_editText.text.toString()
 
@@ -81,5 +83,23 @@ class MainActivity : AppCompatActivity() {
         val toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
         toast.setGravity(Gravity.CENTER, 0, 0)
         toast.show()
+    }
+
+    //Interface Method from Fragment
+    override fun passBackISBN(isbn: String?) {
+        if(!model.searchViaModel(isbn)){
+            displayToast("Invalid Barcode")
+        }
+
+        removeFragment()
+    }
+
+    //Private Method to dismiss fragment
+    fun removeFragment(){
+        val fragment = supportFragmentManager.findFragmentById(R.id.frame_layout)
+
+        fragment?.let{
+            supportFragmentManager.beginTransaction().remove(it)?.commit()
+        }
     }
 }
