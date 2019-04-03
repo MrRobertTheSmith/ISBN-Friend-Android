@@ -50,6 +50,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        if(supportFragmentManager.backStackEntryCount > 0){
+            supportFragmentManager.popBackStackImmediate()
+        }
+        else{
+            super.onBackPressed()}
+    }
+
     fun searchPressed(view: View){
         val stringEntered = search_editText.text.toString()
 
@@ -64,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
 
-        transaction.add(R.id.constraintLayout, frag).addToBackStack(null).commit()
+        transaction.add(R.id.frame_layout, frag).addToBackStack(null).commit()
     }
 
     //Private helper method to build a toast; this is used when there is an input
