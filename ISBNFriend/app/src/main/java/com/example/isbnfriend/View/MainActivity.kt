@@ -91,13 +91,13 @@ class MainActivity : AppCompatActivity(), BarcodeScannerFragmentInterface {
             displayToast("Invalid Barcode")
         }
 
+        Log.d(TAG, isbn)
         removeFragment()
     }
 
     //Private Method to dismiss fragment
     fun removeFragment(){
         val fragment = supportFragmentManager.findFragmentById(R.id.frame_layout)
-
         fragment?.let{
             supportFragmentManager.beginTransaction().remove(it)?.commit()
         }

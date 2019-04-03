@@ -69,14 +69,14 @@ public class BarcodeScannerFragment extends Fragment {
             }
 
             @Override
-            public void receiveDetections(Detector.Detections<Barcode> detections) {
-                final SparseArray barcodes = detections.getDetectedItems();
+            public void receiveDetections(Detector.Detections detections) {
+                final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
                 if(barcodes.size() > 0){
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            scannerInterface.passBackISBN(barcodes.valueAt(0).toString());
+                            scannerInterface.passBackISBN(barcodes.valueAt(0).displayValue);
                         }
                     });
                 }
