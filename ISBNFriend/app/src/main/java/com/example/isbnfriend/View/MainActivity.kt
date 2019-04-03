@@ -58,6 +58,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun scanPressed(view: View){
+        val frag = BarcodeScannerFragment.newInstance()
+
+        val fragmentManager = supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+
+        transaction.add(R.id.constraintLayout, frag).addToBackStack(null).commit()
+    }
+
     //Private helper method to build a toast; this is used when there is an input
     //validation issue or no valid API response
     private fun displayToast(message:String){

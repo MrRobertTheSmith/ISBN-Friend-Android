@@ -9,11 +9,12 @@ import android.view.ViewGroup;
 
 import com.example.isbnfriend.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class BarcodeScannerFragment extends Fragment {
 
+    //Factory Method
+    public static BarcodeScannerFragment newInstance(){
+        return new BarcodeScannerFragment();
+    }
 
     public BarcodeScannerFragment() {
         // Required empty public constructor
