@@ -21,12 +21,12 @@ import java.io.IOException;
 public class BarcodeScannerFragment extends Fragment {
 
     //Properties
-    CameraSource camSource;
-    SurfaceView cameraView;
+    private CameraSource camSource;
+    private SurfaceView cameraView;
     private BarcodeDetector bDetector;
 
     //Interface
-    BarcodeScannerFragmentInterface scannerInterface;
+    private BarcodeScannerFragmentInterface scannerInterface;
 
     //This method initialises new fragments
     public static BarcodeScannerFragment newInstance() {

@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), BarcodeScannerFragmentInterface {
     var fragmentOn = false
     val STATE_KEY = "FRAGSTATE"
 
-    lateinit var model:NetworkViewmodel;
+    lateinit var model:NetworkViewmodel
 
     //Lifecycle Methods
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity(), BarcodeScannerFragmentInterface {
     fun removeFragment(){
         val fragment = supportFragmentManager.findFragmentById(R.id.frame_layout)
         fragment?.let{
-            supportFragmentManager.beginTransaction().remove(it)?.commit()
+            supportFragmentManager.beginTransaction().remove(it).commit()
         }
         showActivityUI()
     }
