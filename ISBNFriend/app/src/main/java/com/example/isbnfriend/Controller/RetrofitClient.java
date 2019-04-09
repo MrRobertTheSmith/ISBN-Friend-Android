@@ -23,8 +23,6 @@ public class RetrofitClient{
 
     public MutableLiveData<Item> observableResponse;
 
-    private static final String TAG = RetrofitClient.class.getName() + "NETTAG";
-
     //Constructor which works the same way as init in swift
     public RetrofitClient() {
 
@@ -48,10 +46,8 @@ public class RetrofitClient{
             public void onResponse(Call<Item> call, Response<Item> response) {
                 if (response.isSuccessful()){
                     observableResponse.setValue(response.body());
-                    Log.d(TAG, "${response.body().getBooks().get(0).getVolumeInfo().getTitle().toString()}");
                 }
                 else{
-                    Log.d(TAG, "Unsuccessful Response");
                     //Clear the item to trigger the observer
                     observableResponse.setValue(new Item());
                 }
@@ -59,8 +55,6 @@ public class RetrofitClient{
 
             @Override
             public void onFailure(Call<Item> call, Throwable t) {
-
-                Log.d(TAG, t.getMessage());
             }
         });
 

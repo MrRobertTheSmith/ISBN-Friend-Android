@@ -28,7 +28,7 @@ public class BarcodeScannerFragment extends Fragment {
     //Interface
     BarcodeScannerFragmentInterface scannerInterface;
 
-    //Factory Method
+    //This method initialises new fragments
     public static BarcodeScannerFragment newInstance() {
         return new BarcodeScannerFragment();
     }
@@ -41,6 +41,9 @@ public class BarcodeScannerFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        //As long as the activity extends the inteface link 'scannerInterface' to the
+        //activity.
         if (context instanceof BarcodeScannerFragmentInterface) {
             scannerInterface = (BarcodeScannerFragmentInterface) context;
         }
@@ -55,13 +58,14 @@ public class BarcodeScannerFragment extends Fragment {
         // Inflate the layout for this fragment
         final View fragmentView = inflater.inflate(R.layout.fragment_barcode_scanner, container, false);
 
-        //Set up the surface View
         cameraView = fragmentView.findViewById(R.id.surfaceView);
 
+        //Set up the barcode detector to scan for all formats
         bDetector = new BarcodeDetector.Builder(getActivity())
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
                 .build();
 
+        //Add new Detector.Processor and watch for detections
         bDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
@@ -70,8 +74,10 @@ public class BarcodeScannerFragment extends Fragment {
 
             @Override
             public void receiveDetections(Detector.Detections detections) {
+
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
+                //If at least one item is returned cal the interface method passing in the barcode as a string.
                 if(barcodes.size() > 0){
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -83,11 +89,13 @@ public class BarcodeScannerFragment extends Fragment {
             }
         });
 
+        //Set up a new CameraSource
         camSource = new CameraSource.Builder(getActivity(), bDetector)
                 .setRequestedPreviewSize(1024, 1680)
                 .setAutoFocusEnabled(true)
                 .build();
 
+        //Link it to the View if the User has given permission
         cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {

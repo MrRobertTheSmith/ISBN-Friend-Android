@@ -110,8 +110,6 @@ class MainActivity : AppCompatActivity(), BarcodeScannerFragmentInterface {
             displayToast("Invalid Barcode")
         }
 
-        Log.d(TAG, isbn)
-        showActivityUI()
         removeFragment()
     }
 
@@ -121,6 +119,7 @@ class MainActivity : AppCompatActivity(), BarcodeScannerFragmentInterface {
         fragment?.let{
             supportFragmentManager.beginTransaction().remove(it)?.commit()
         }
+        showActivityUI()
     }
 
     fun showActivityUI(){
