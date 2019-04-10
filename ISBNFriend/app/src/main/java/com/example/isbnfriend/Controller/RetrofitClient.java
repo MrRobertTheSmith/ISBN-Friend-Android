@@ -1,7 +1,6 @@
 package com.example.isbnfriend.Controller;
 
 import android.arch.lifecycle.MutableLiveData;
-import android.util.Log;
 import com.example.isbnfriend.Model.Item;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,7 +18,7 @@ My approach is to use LiveData here which is observable from another part of the
 public class RetrofitClient{
     private static Retrofit retroFit;
     private static final String baseURL = "https://www.googleapis.com/books/v1/";
-    GoogleBooksAPI gbAPI;
+    private GoogleBooksAPI gbAPI;
 
     public MutableLiveData<Item> observableResponse;
 
