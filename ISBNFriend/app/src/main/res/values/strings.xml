@@ -2,5 +2,5 @@
     <string name="app_name">ISBN Friend</string>
     <string name="search">Search</string>
     <string name="search_autofill_hints">An ISBN to search</string>
-    <string name="Fragment_Launch_Error_Message">Error</string>
+    <string name="Fragment_Launch_Error_Message">This Activity should implement BarcodeScannerFragmentInterface but evidently does not</string>
 </resources>
