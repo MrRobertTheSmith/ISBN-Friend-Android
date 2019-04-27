@@ -2,11 +2,9 @@ package com.example.isbnfriend.View
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.method.ScrollingMovementMethod
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
